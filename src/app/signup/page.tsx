@@ -27,7 +27,8 @@ export default function SignupPage() {
 
   return (
     <main>
-      <h1>Create your account</h1>
+      <h1 className="text-2xl">Create Your Free Account</h1>
+      <p>One login is all you need to access the store.</p>
       <form onSubmit={onSubmit}>
         <label>
           Name

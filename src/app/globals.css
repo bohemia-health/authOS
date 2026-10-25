@@ -1,15 +1,109 @@
 @import "tailwindcss";
 
+/* The TRIAL files render most punctuation (& ? ( ) : % " ...) as placeholder
+   dots, so the unicode-range below is deliberate: it limits Suisse to letters,
+   digits, and , - . and lets everything else fall back to the system font.
+   Remove the ranges only once the licensed files are in. */
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("/fonts/SuisseIntlTRIAL-Regular.woff2") format("woff2");
+  unicode-range:
+    U+0020, U+002C-002E, U+0030-0039, U+0041-005A, U+0061-007A, U+00A0,
+    U+00C0-00C5, U+00C7-00CF, U+00D1-00D6, U+00D9-00DD, U+00E0-00E5,
+    U+00E7-00EF, U+00F1-00F6, U+00F9-00FD, U+00FF-010F, U+0112-0125,
+    U+0128-0130, U+0134-0137, U+0139-0140, U+0143-0148, U+014C-0151,
+    U+0154-0165, U+0168-017E, U+01A0-01A1, U+01AF-01B0, U+01CD-01D4,
+    U+01E6-01E7, U+01EA-01EB, U+01F4-01F5, U+0218-021B, U+0232-0233,
+    U+1E04-1E05, U+1E0C-1E0D, U+1E20-1E21, U+1E24-1E27, U+1E36-1E37,
+    U+1E44-1E47, U+1E56-1E57, U+1E62-1E63, U+1E6C-1E6D, U+1E80-1E85,
+    U+1E8C-1E8D, U+1E92-1E93, U+1EA0-1EF9, U+2002-200A, U+2010-2011, U+2019,
+    U+202F;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("/fonts/SuisseIntlTRIAL-Medium.woff2") format("woff2");
+  unicode-range:
+    U+0020, U+002C-002E, U+0030-0039, U+0041-005A, U+0061-007A, U+00A0,
+    U+00C0-00C5, U+00C7-00CF, U+00D1-00D6, U+00D9-00DD, U+00E0-00E5,
+    U+00E7-00EF, U+00F1-00F6, U+00F9-00FD, U+00FF-010F, U+0112-0125,
+    U+0128-0130, U+0134-0137, U+0139-0140, U+0143-0148, U+014C-0151,
+    U+0154-0165, U+0168-017E, U+01A0-01A1, U+01AF-01B0, U+01CD-01D4,
+    U+01E6-01E7, U+01EA-01EB, U+01F4-01F5, U+0218-021B, U+0232-0233,
+    U+1E04-1E05, U+1E0C-1E0D, U+1E20-1E21, U+1E24-1E27, U+1E36-1E37,
+    U+1E44-1E47, U+1E56-1E57, U+1E62-1E63, U+1E6C-1E6D, U+1E80-1E85,
+    U+1E8C-1E8D, U+1E92-1E93, U+1EA0-1EF9, U+2002-200A, U+2010-2011, U+2019,
+    U+202F;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("/fonts/SuisseIntlTRIAL-Light.woff2") format("woff2");
+  unicode-range:
+    U+0020, U+002C-002E, U+0030-0039, U+0041-005A, U+0061-007A, U+00A0,
+    U+00C0-00C5, U+00C7-00CF, U+00D1-00D6, U+00D9-00DD, U+00E0-00E5,
+    U+00E7-00EF, U+00F1-00F6, U+00F9-00FD, U+00FF-010F, U+0112-0125,
+    U+0128-0130, U+0134-0137, U+0139-0140, U+0143-0148, U+014C-0151,
+    U+0154-0165, U+0168-017E, U+01A0-01A1, U+01AF-01B0, U+01CD-01D4,
+    U+01E6-01E7, U+01EA-01EB, U+01F4-01F5, U+0218-021B, U+0232-0233,
+    U+1E04-1E05, U+1E0C-1E0D, U+1E20-1E21, U+1E24-1E27, U+1E36-1E37,
+    U+1E44-1E47, U+1E56-1E57, U+1E62-1E63, U+1E6C-1E6D, U+1E80-1E85,
+    U+1E8C-1E8D, U+1E92-1E93, U+1EA0-1EF9, U+2002-200A, U+2010-2011, U+2019,
+    U+202F;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("/fonts/SuisseIntlTRIAL-Semibold.woff2") format("woff2");
+  unicode-range:
+    U+0020, U+002C-002E, U+0030-0039, U+0041-005A, U+0061-007A, U+00A0,
+    U+00C0-00C5, U+00C7-00CF, U+00D1-00D6, U+00D9-00DD, U+00E0-00E5,
+    U+00E7-00EF, U+00F1-00F6, U+00F9-00FD, U+00FF-010F, U+0112-0125,
+    U+0128-0130, U+0134-0137, U+0139-0140, U+0143-0148, U+014C-0151,
+    U+0154-0165, U+0168-017E, U+01A0-01A1, U+01AF-01B0, U+01CD-01D4,
+    U+01E6-01E7, U+01EA-01EB, U+01F4-01F5, U+0218-021B, U+0232-0233,
+    U+1E04-1E05, U+1E0C-1E0D, U+1E20-1E21, U+1E24-1E27, U+1E36-1E37,
+    U+1E44-1E47, U+1E56-1E57, U+1E62-1E63, U+1E6C-1E6D, U+1E80-1E85,
+    U+1E8C-1E8D, U+1E92-1E93, U+1EA0-1EF9, U+2002-200A, U+2010-2011, U+2019,
+    U+202F;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Suisse Intl";
+  src: url("/fonts/SuisseIntlTRIAL-Bold.woff2") format("woff2");
+  unicode-range:
+    U+0020, U+002C-002E, U+0030-0039, U+0041-005A, U+0061-007A, U+00A0,
+    U+00C0-00C5, U+00C7-00CF, U+00D1-00D6, U+00D9-00DD, U+00E0-00E5,
+    U+00E7-00EF, U+00F1-00F6, U+00F9-00FD, U+00FF-010F, U+0112-0125,
+    U+0128-0130, U+0134-0137, U+0139-0140, U+0143-0148, U+014C-0151,
+    U+0154-0165, U+0168-017E, U+01A0-01A1, U+01AF-01B0, U+01CD-01D4,
+    U+01E6-01E7, U+01EA-01EB, U+01F4-01F5, U+0218-021B, U+0232-0233,
+    U+1E04-1E05, U+1E0C-1E0D, U+1E20-1E21, U+1E24-1E27, U+1E36-1E37,
+    U+1E44-1E47, U+1E56-1E57, U+1E62-1E63, U+1E6C-1E6D, U+1E80-1E85,
+    U+1E8C-1E8D, U+1E92-1E93, U+1EA0-1EF9, U+2002-200A, U+2010-2011, U+2019,
+    U+202F;
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-sans: "Suisse Intl", system-ui, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +116,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
