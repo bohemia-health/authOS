@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { CAPTCHA_ENABLED, Captcha, captchaHeaders } from "@/components/captcha";
 import { accountNav } from "@/lib/account-nav";
+import { safeReturnTo } from "@/lib/return-to";
 import { FloatingInput, SetLocalNav } from "@asclepius/ui";
 
 export default function LoginPage() {
   const router = useRouter();
+  const returnTo = safeReturnTo(useSearchParams().get("redirect"));
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [captcha, setCaptcha] = useState("");
@@ -32,7 +34,8 @@ export default function LoginPage() {
       window.location.href = data.url;
       return;
     }
-    router.push("/");
+    if (returnTo.startsWith("/")) router.push(returnTo);
+    else window.location.href = returnTo;
   }
 
   return (
@@ -79,7 +82,7 @@ export default function LoginPage() {
         </form>
 
         <p>
-          No account? <Link href="/signup">Sign up</Link>
+          No account? <Link href={`/signup${returnTo !== "/" ? `?redirect=${encodeURIComponent(returnTo)}` : ""}`}>Sign up</Link>
         </p>
       </div>
     </main>

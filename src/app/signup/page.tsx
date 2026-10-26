@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { CAPTCHA_ENABLED, Captcha, captchaHeaders } from "@/components/captcha";
 import { accountNav } from "@/lib/account-nav";
+import { safeReturnTo } from "@/lib/return-to";
 import { STORE_URL } from "@/lib/store";
 import { BirthdaySelect, readBirthday, FloatingInput, Separator, Checkbox, SetLocalNav } from "@asclepius/ui";
 
 export default function SignupPage() {
   const router = useRouter();
+  const returnTo = safeReturnTo(useSearchParams().get("redirect"));
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [captcha, setCaptcha] = useState("");
@@ -46,7 +48,8 @@ export default function SignupPage() {
       window.location.href = data.url;
       return;
     }
-    router.push("/");
+    if (returnTo.startsWith("/")) router.push(returnTo);
+    else window.location.href = returnTo;
   }
 
   return (
@@ -151,7 +154,7 @@ export default function SignupPage() {
         <Separator className="my-5" />
 
         <p>
-          Already have an account? <Link href="/login">Log in</Link>
+          Already have an account? <Link href={`/login${returnTo !== "/" ? `?redirect=${encodeURIComponent(returnTo)}` : ""}`}>Log in</Link>
         </p>
       </div>
     </main>
