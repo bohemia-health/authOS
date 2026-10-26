@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleHelp } from "lucide-react";
+import { Question } from "@phosphor-icons/react";
 import { cn } from "cn";
 import {
   Tooltip,
@@ -36,7 +36,7 @@ export function HelpTip({ label, children, className }: Props) {
             />
           }
         >
-          <CircleHelp size={16} strokeWidth={1.5} />
+          <Question size={16} weight="fill" />
         </TooltipTrigger>
         <TooltipContent side="top" className="max-w-56 text-center">
           {children}

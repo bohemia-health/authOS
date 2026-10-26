@@ -77,8 +77,8 @@ export function BirthdaySelect() {
       <div className="flex items-center gap-1.5 text-sm text-neutral-600">
         <span>Birthday</span>
         <HelpTip label="Why we ask for your birthday">
-          You must be 18 or older to create an account. Your birthday is used
-          only to confirm that.
+          This information is used to determine the services available for your
+          account.
         </HelpTip>
       </div>
       <div className="flex w-full gap-2">
