@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* The TRIAL files render most punctuation (& ? ( ) : % " ...) as placeholder
    dots, so the unicode-range below is deliberate: it limits Suisse to letters,

@@ -2,10 +2,21 @@
 
 import { useSyncExternalStore } from "react";
 import { ChevronDown } from "lucide-react";
+import { HelpTip } from "@/components/help-tip";
 
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 const DAYS = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -62,28 +73,52 @@ export function BirthdaySelect() {
     ? Array.from({ length: 100 }, (_, i) => thisYear - i)
     : [];
   return (
-    <div className="flex w-full gap-2">
-      <Field name="bdayMonth" label="Month" autoComplete="bday-month" className="flex-[2]">
-        {MONTHS.map((m, i) => (
-          <option key={m} value={i + 1}>
-            {m}
-          </option>
-        ))}
-      </Field>
-      <Field name="bdayDay" label="Day" autoComplete="bday-day" className="flex-1">
-        {DAYS.map((d) => (
-          <option key={d} value={d}>
-            {d}
-          </option>
-        ))}
-      </Field>
-      <Field name="bdayYear" label="Year" autoComplete="bday-year" className="flex-[1.4]">
-        {years.map((y) => (
-          <option key={y} value={y}>
-            {y}
-          </option>
-        ))}
-      </Field>
+    <div className="flex w-full flex-col gap-1.5">
+      <div className="flex items-center gap-1.5 text-sm text-neutral-600">
+        <span>Birthday</span>
+        <HelpTip label="Why we ask for your birthday">
+          You must be 18 or older to create an account. Your birthday is used
+          only to confirm that.
+        </HelpTip>
+      </div>
+      <div className="flex w-full gap-2">
+        <Field
+          name="bdayMonth"
+          label="Month"
+          autoComplete="bday-month"
+          className="flex-[2]"
+        >
+          {MONTHS.map((m, i) => (
+            <option key={m} value={i + 1}>
+              {m}
+            </option>
+          ))}
+        </Field>
+        <Field
+          name="bdayDay"
+          label="Day"
+          autoComplete="bday-day"
+          className="flex-1"
+        >
+          {DAYS.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </Field>
+        <Field
+          name="bdayYear"
+          label="Year"
+          autoComplete="bday-year"
+          className="flex-[1.4]"
+        >
+          {years.map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </Field>
+      </div>
     </div>
   );
 }
