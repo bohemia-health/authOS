@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { FloatingInput } from "@/components/floating-input";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,27 +27,42 @@ export default function LoginPage() {
 
   return (
     <main>
-      <h1>Log in</h1>
-      <form onSubmit={onSubmit}>
-        <label>
-          Email
-          <input name="email" type="email" autoComplete="email" required />
-        </label>
-        <label>
-          Password
-          <input
+      <div className="flex flex-col py-6 gap-2 text-center">
+        <h1 className="text-3xl font-medium tracking-tight">Log in</h1>
+        <p className="">One login is all you need to access the store.</p>
+
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-col items-center gap-2 mt-6"
+        >
+          <FloatingInput
+            id="email"
+            name="email"
+            type="email"
+            label="Email"
+            autoComplete="email"
+            required
+          />
+
+          <FloatingInput
+            id="password"
             name="password"
             type="password"
+            label="Password"
             autoComplete="current-password"
             required
           />
-        </label>
-        {error && <p role="alert">{error}</p>}
-        <button disabled={pending}>{pending ? "Signing in…" : "Log in"}</button>
-      </form>
-      <p>
-        No account? <Link href="/signup">Sign up</Link>
-      </p>
+
+          {error && <p role="alert">{error}</p>}
+          <button disabled={pending}>
+            {pending ? "Signing in…" : "Log in"}
+          </button>
+        </form>
+
+        <p>
+          No account? <Link href="/signup">Sign up</Link>
+        </p>
+      </div>
     </main>
   );
 }
