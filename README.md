@@ -18,6 +18,7 @@ npm run dev            # http://localhost:3000, expects Asclepius on :8787
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Asclepius origin, `http://localhost:8787` locally, `https://api.bhmhlth.com` in production |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key; unset hides the captcha (Asclepius must have the matching secret) |
+| `NEXT_PUBLIC_ALLOWED_RETURN_ORIGINS` | Extra origins the `?redirect=` param may point at, comma-separated; the store origin is always allowed |
 | `NEXT_PUBLIC_STORE_URL` | Storefront origin for navbar and footer links, default `https://www.bhmhlth.com` |
 
 ## Design system dependency
