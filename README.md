@@ -19,6 +19,18 @@ npm run dev            # http://localhost:3000, expects Asclepius on :8787
 | `NEXT_PUBLIC_API_URL` | Asclepius origin, `http://localhost:8787` locally, `https://api.bhmhlth.com` in production |
 | `NEXT_PUBLIC_STORE_URL` | Storefront origin for navbar and footer links, default `https://www.bhmhlth.com` |
 
+## Design system dependency
+
+`@asclepius/ui` is installed from its GitHub repo (`git+ssh://git@github.com/bohemia-health/asclepius.git#main`), so a fresh clone and Vercel both get the real package. On Vercel, set `GITHUB_TOKEN` to a fine-grained token with read access to the asclepius repo; `vercel.json` rewrites the SSH URL to HTTPS with it during install.
+
+To work on the package and this app at the same time, link the local folder without changing `package.json`:
+
+```bash
+npm install --legacy-peer-deps --no-save ../asclepius
+```
+
+A normal `npm install` puts the GitHub copy back.
+
 ## Pages
 
 `/signup`, `/login`, `/forgot-password`, `/reset-password`, `/verify-email`, `/consent`. The last is where Asclepius sends people when another app requests access to their account.
