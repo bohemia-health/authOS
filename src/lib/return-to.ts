@@ -14,7 +14,10 @@ const allowedOrigins = () => {
   return new Set(list.map((o) => new URL(o).origin));
 };
 
-export function safeReturnTo(raw: string | null, fallback = "/"): string {
+/** Default landing after signup/login: the store, since there is no profile page yet. */
+export const DEFAULT_RETURN_TO = STORE_URL;
+
+export function safeReturnTo(raw: string | null, fallback = DEFAULT_RETURN_TO): string {
   if (!raw) return fallback;
   if (raw.startsWith("/") && !raw.startsWith("//")) return raw;
   try {

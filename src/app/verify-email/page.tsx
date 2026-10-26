@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { SetLocalNav } from "@asclepius/ui";
 import { authClient } from "@/lib/auth-client";
 import { accountNav } from "@/lib/account-nav";
+import { STORE_URL } from "@/lib/store";
 
 // Landing page for the link in the verification email. Asclepius verifies the
 // token and redirects here; a failed token arrives with ?error=.
@@ -40,7 +41,7 @@ function Status() {
     <>
       <p className="text-muted-foreground">Your email is verified. You&rsquo;re all set.</p>
       <p className="mt-4">
-        <Link href="/">Continue</Link>
+        <Link href={STORE_URL}>Continue to the store</Link>
       </p>
     </>
   );

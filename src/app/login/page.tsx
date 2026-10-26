@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { CAPTCHA_ENABLED, Captcha, captchaHeaders } from "@/components/captcha";
 import { accountNav } from "@/lib/account-nav";
-import { safeReturnTo } from "@/lib/return-to";
+import { DEFAULT_RETURN_TO, safeReturnTo } from "@/lib/return-to";
 import { FloatingInput, SetLocalNav } from "@asclepius/ui";
 
 function LoginForm() {
@@ -82,7 +82,7 @@ function LoginForm() {
         </form>
 
         <p>
-          No account? <Link href={`/signup${returnTo !== "/" ? `?redirect=${encodeURIComponent(returnTo)}` : ""}`}>Sign up</Link>
+          No account? <Link href={`/signup${returnTo !== DEFAULT_RETURN_TO ? `?redirect=${encodeURIComponent(returnTo)}` : ""}`}>Sign up</Link>
         </p>
       </div>
     </main>
