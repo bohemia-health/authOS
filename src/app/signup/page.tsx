@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { CAPTCHA_ENABLED, Captcha, captchaHeaders } from "@/components/captcha";
 import { accountNav } from "@/lib/account-nav";
 import { STORE_URL } from "@/lib/store";
 import { BirthdaySelect, readBirthday, FloatingInput, Separator, Checkbox, SetLocalNav } from "@asclepius/ui";
@@ -12,6 +13,7 @@ export default function SignupPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [captcha, setCaptcha] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,6 +29,7 @@ export default function SignupPage() {
     setPending(true);
     setError(null);
     const { data, error } = await authClient.signUp.email({
+      fetchOptions: captchaHeaders(captcha),
       // The verification email's link lands back on this site.
       callbackURL: `${window.location.origin}/verify-email`,
       name: `${firstName} ${lastName}`,
@@ -137,8 +140,10 @@ export default function SignupPage() {
             .
           </p>
 
+          <Captcha onToken={setCaptcha} />
+
           {error && <p role="alert">{error}</p>}
-          <button disabled={pending}>
+          <button disabled={pending || (CAPTCHA_ENABLED && !captcha)}>
             {pending ? "Creating…" : "Sign up"}
           </button>
         </form>

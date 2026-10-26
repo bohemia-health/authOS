@@ -4,12 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import { FloatingInput, SetLocalNav } from "@asclepius/ui";
 import { authClient } from "@/lib/auth-client";
+import { CAPTCHA_ENABLED, Captcha, captchaHeaders } from "@/components/captcha";
 import { accountNav } from "@/lib/account-nav";
 
 export default function ForgotPasswordPage() {
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [captcha, setCaptcha] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,6 +19,7 @@ export default function ForgotPasswordPage() {
     setPending(true);
     setError(null);
     const { error } = await authClient.requestPasswordReset({
+      fetchOptions: captchaHeaders(captcha),
       email,
       // Asclepius mails a link that lands back here with ?token=
       redirectTo: `${window.location.origin}/reset-password`,
@@ -50,8 +53,11 @@ export default function ForgotPasswordPage() {
                 autoComplete="email"
                 required
               />
+              <Captcha onToken={setCaptcha} />
               {error && <p role="alert">{error}</p>}
-              <button disabled={pending}>{pending ? "Sending…" : "Send reset link"}</button>
+              <button disabled={pending || (CAPTCHA_ENABLED && !captcha)}>
+                {pending ? "Sending…" : "Send reset link"}
+              </button>
             </form>
           </>
         )}
