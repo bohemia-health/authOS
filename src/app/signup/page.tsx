@@ -4,18 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { accountNav } from "@/lib/account-nav";
 import { STORE_URL } from "@/lib/store";
 import { BirthdaySelect, readBirthday, FloatingInput, Separator, Checkbox, SetLocalNav } from "@asclepius/ui";
-
-const accountNav = {
-  title: "Bohemia Account",
-  href: "/",
-  links: [
-    { href: "/login", label: "Log in" },
-    { href: "/signup", label: "Create account" },
-  ],
-  sticky: true,
-};
 
 export default function SignupPage() {
   const router = useRouter();
@@ -35,7 +26,9 @@ export default function SignupPage() {
     }
     setPending(true);
     setError(null);
-    const { error } = await authClient.signUp.email({
+    const { data, error } = await authClient.signUp.email({
+      // The verification email's link lands back on this site.
+      callbackURL: `${window.location.origin}/verify-email`,
       name: `${firstName} ${lastName}`,
       firstName,
       lastName,
@@ -46,6 +39,10 @@ export default function SignupPage() {
     });
     setPending(false);
     if (error) return setError(error.message ?? "Sign up failed");
+    if (data && "url" in data && typeof data.url === "string") {
+      window.location.href = data.url;
+      return;
+    }
     router.push("/");
   }
 

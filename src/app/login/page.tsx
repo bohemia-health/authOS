@@ -4,17 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { accountNav } from "@/lib/account-nav";
 import { FloatingInput, SetLocalNav } from "@asclepius/ui";
-
-const accountNav = {
-  title: "Bohemia Account",
-  href: "/",
-  links: [
-    { href: "/login", label: "Log in" },
-    { href: "/signup", label: "Create account" },
-  ],
-  sticky: true,
-};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,12 +17,18 @@ export default function LoginPage() {
     const form = new FormData(e.currentTarget);
     setPending(true);
     setError(null);
-    const { error } = await authClient.signIn.email({
+    const { data, error } = await authClient.signIn.email({
       email: String(form.get("email")),
       password: String(form.get("password")),
     });
     setPending(false);
     if (error) return setError(error.message ?? "Sign in failed");
+    // If another app sent the person here, Asclepius answers with where to
+    // send them back; otherwise stay on the account home.
+    if (data && "url" in data && typeof data.url === "string") {
+      window.location.href = data.url;
+      return;
+    }
     router.push("/");
   }
 
@@ -63,6 +60,12 @@ export default function LoginPage() {
             autoComplete="current-password"
             required
           />
+
+          <p className="w-full text-right text-sm">
+            <Link href="/forgot-password" className="text-muted-foreground hover:text-foreground">
+              Forgot password?
+            </Link>
+          </p>
 
           {error && <p role="alert">{error}</p>}
           <button disabled={pending}>

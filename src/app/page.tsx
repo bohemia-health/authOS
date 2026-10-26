@@ -20,6 +20,24 @@ export default function Home() {
   return (
     <main>
       <p>Signed in as {session.user.email}</p>
+      {!session.user.emailVerified && (
+        <p className="text-sm text-muted-foreground">
+          Your email isn&rsquo;t verified yet. Check your inbox, or{" "}
+          <button
+            type="button"
+            className="underline"
+            onClick={() =>
+              authClient.sendVerificationEmail({
+                email: session.user.email,
+                callbackURL: `${window.location.origin}/verify-email`,
+              })
+            }
+          >
+            send the link again
+          </button>
+          .
+        </p>
+      )}
       <Button onClick={() => authClient.signOut()}>Sign out</Button>
     </main>
   );
