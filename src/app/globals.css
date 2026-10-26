@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@asclepius/ui/tokens.css";
+/* Tailwind only scans this app by default; the design system is a linked
+   sibling folder, so point it there too. */
+@source "../../node_modules/@asclepius/ui/src";
+@custom-variant dark (&:is(.dark *));
 
 /* The TRIAL files render most punctuation (& ? ( ) : % " ...) as placeholder
    dots, so the unicode-range below is deliberate: it limits Suisse to letters,
@@ -93,29 +98,4 @@
     U+202F;
   font-weight: 700;
   font-display: swap;
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-sans: "Suisse Intl", system-ui, sans-serif;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
 }

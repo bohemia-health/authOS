@@ -4,8 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { BirthdaySelect, readBirthday } from "@/components/birthday-select";
-import { FloatingInput } from "@/components/floating-input";
+import { STORE_URL } from "@/lib/store";
+import { BirthdaySelect, readBirthday, FloatingInput, Separator, Checkbox, SetLocalNav } from "@asclepius/ui";
+
+const accountNav = {
+  title: "Bohemia Account",
+  href: "/",
+  links: [
+    { href: "/login", label: "Log in" },
+    { href: "/signup", label: "Create account" },
+  ],
+  sticky: true,
+};
 
 export default function SignupPage() {
   const router = useRouter();
@@ -32,6 +42,7 @@ export default function SignupPage() {
       birthDate,
       email: String(form.get("email")),
       password,
+      marketingOptIn: form.get("marketingOptIn") === "on",
     });
     setPending(false);
     if (error) return setError(error.message ?? "Sign up failed");
@@ -40,7 +51,8 @@ export default function SignupPage() {
 
   return (
     <main>
-      <div className="flex flex-col mx-56 py-6 gap-2 text-center">
+      <SetLocalNav {...accountNav} />
+      <div className="mx-auto flex w-full max-w-md flex-col gap-3 px-6 py-12 text-center md:max-w-lg md:py-16 lg:max-w-xl">
         <h1 className="text-3xl font-medium tracking-tight">
           Create Your Free Account
         </h1>
@@ -48,9 +60,9 @@ export default function SignupPage() {
 
         <form
           onSubmit={onSubmit}
-          className="flex flex-col items-center gap-2 mt-6"
+          className="mt-8 flex flex-col items-center gap-3"
         >
-          <div className="flex w-full gap-2">
+          <div className="flex w-full gap-3">
             <FloatingInput
               id="firstName"
               name="firstName"
@@ -69,11 +81,14 @@ export default function SignupPage() {
 
           <BirthdaySelect />
 
+          <Separator className="my-5" />
+
           <FloatingInput
             id="email"
             name="email"
             type="email"
             label="Name@example.com"
+            errorLabel="Email"
             autoComplete="email"
             required
           />
@@ -98,11 +113,40 @@ export default function SignupPage() {
             required
           />
 
+          <label
+            htmlFor="marketingOptIn"
+            className="mt-2 flex w-full items-start gap-3 text-left text-sm text-neutral-600"
+          >
+            <Checkbox id="marketingOptIn" name="marketingOptIn" className="mt-0.5" />
+            Send me product announcements, lab report updates, and offers by
+            email. You can unsubscribe at any time.
+          </label>
+
+          <p className="mt-4 max-w-sm text-xs leading-relaxed text-neutral-500">
+            By clicking Sign up, you agree to Bohemia Health&rsquo;s{" "}
+            <a
+              href={`${STORE_URL}/legal/terms-of-use`}
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              Terms of Use
+            </a>{" "}
+            and{" "}
+            <a
+              href={`${STORE_URL}/legal`}
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              Privacy Policy
+            </a>
+            .
+          </p>
+
           {error && <p role="alert">{error}</p>}
           <button disabled={pending}>
             {pending ? "Creating…" : "Sign up"}
           </button>
         </form>
+
+        <Separator className="my-5" />
 
         <p>
           Already have an account? <Link href="/login">Log in</Link>

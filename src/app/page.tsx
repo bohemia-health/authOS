@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@asclepius/ui";
 
 export default function Home() {
   const { data: session, isPending } = authClient.useSession();
@@ -19,7 +20,7 @@ export default function Home() {
   return (
     <main>
       <p>Signed in as {session.user.email}</p>
-      <button onClick={() => authClient.signOut()}>Sign out</button>
+      <Button onClick={() => authClient.signOut()}>Sign out</Button>
     </main>
   );
 }

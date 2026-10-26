@@ -13,6 +13,7 @@ export const authClient = createAuthClient({
         firstName: { type: "string", required: true },
         lastName: { type: "string", required: true },
         birthDate: { type: "date", required: true },
+        marketingOptIn: { type: "boolean", required: false },
       },
     }),
   ],

@@ -4,7 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { FloatingInput } from "@/components/floating-input";
+import { FloatingInput, SetLocalNav } from "@asclepius/ui";
+
+const accountNav = {
+  title: "Bohemia Account",
+  href: "/",
+  links: [
+    { href: "/login", label: "Log in" },
+    { href: "/signup", label: "Create account" },
+  ],
+  sticky: true,
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,13 +37,14 @@ export default function LoginPage() {
 
   return (
     <main>
-      <div className="flex flex-col py-6 gap-2 text-center">
+      <SetLocalNav {...accountNav} />
+      <div className="mx-auto flex w-full max-w-md flex-col gap-3 px-6 py-12 text-center md:max-w-lg md:py-16 lg:max-w-xl">
         <h1 className="text-3xl font-medium tracking-tight">Log in</h1>
         <p className="">One login is all you need to access the store.</p>
 
         <form
           onSubmit={onSubmit}
-          className="flex flex-col items-center gap-2 mt-6"
+          className="mt-8 flex flex-col items-center gap-3"
         >
           <FloatingInput
             id="email"
