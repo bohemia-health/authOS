@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -9,7 +9,7 @@ import { accountNav } from "@/lib/account-nav";
 import { safeReturnTo } from "@/lib/return-to";
 import { FloatingInput, SetLocalNav } from "@asclepius/ui";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const returnTo = safeReturnTo(useSearchParams().get("redirect"));
   const [error, setError] = useState<string | null>(null);
@@ -86,5 +86,15 @@ export default function LoginPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+// useSearchParams (the ?redirect= read) needs a Suspense boundary so the
+// page's static shell can still be prerendered.
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }
