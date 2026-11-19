@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    // Let Next flag security releases to coding agents working in this app.
+    agentUpgrade: "security",
+  },
   turbopack: {
     // Locally @asclepius/ui may be a symlink to the sibling folder, which
     // Turbopack can only read if its root is the workspace. On Vercel the
